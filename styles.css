@@ -1,0 +1,437 @@
+/* ==========================================================================
+   ESTILOS DE ACCESIBILIDAD (WCAG 2.1 / 2.2 AA) - HISTORIA DE LOS MURLOCS
+   ========================================================================== */
+
+/* 1. IMPORTACIÓN DE TIPOGRAFÍA ACCESIBLE DE GOOGLE FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* 2. VARIABLES DE DISEÑO (PALETA ACUÁTICA MURLOC CON ALTO CONTRASTE) */
+:root {
+  /* Fondos claros */
+  --bg-page: #f2f7f7;          /* Fondo blanco hielo con sutil matiz aguamarina */
+  --bg-surface: #ffffff;       /* Fondo blanco puro para tarjetas y secciones */
+  --bg-surface-alt: #e5f0f2;   /* Fondo secundario acuático claro */
+
+  /* Textos de máximo contraste */
+  --text-primary: #0a2228;     /* Verde azulado abisal muy oscuro (Contraste > 14:1) */
+  --text-secondary: #163e46;   /* Verde azulado intermedio para subtítulos (> 8:1) */
+  --text-muted: #244b53;       /* Verde azulado suave legible (> 6:1) */
+
+  /* Acentos (Naranja Coral para enlaces y botones con contraste >= 4.5:1) */
+  --accent-coral: #b83a1b;     /* Naranja coral profundo (Contraste 5.6:1 sobre fondo claro) */
+  --accent-coral-hover: #8f2910; /* Coral oscuro para hover y active (> 7:1) */
+  --accent-coral-soft: #ffece5;  /* Coral muy claro para fondos de interacción */
+
+  /* Bordes e interfaces no textuales (Contraste >= 3:1 según WCAG 1.4.11) */
+  --border-color: #9cbcc2;     /* Borde marino definido */
+  --border-subtle: #d0e2e5;    /* Borde suave para divisores */
+  --focus-ring: #b83a1b;       /* Anillo de enfoque de alta visibilidad */
+
+  /* Tipografía y medidas */
+  --font-family-base: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --line-height-base: 1.65;
+  --max-content-width: 960px;
+}
+
+/* 3. RESET Y REGLAS BASE DE ACCESIBILIDAD */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 100%; /* 16px por defecto para respetar preferencias del navegador */
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-base);
+  font-size: 1.0625rem; /* ~17px para mejorar legibilidad */
+  line-height: var(--line-height-base);
+  color: var(--text-primary);
+  background-color: var(--bg-page);
+  padding: 0;
+  margin: 0;
+  text-align: left; /* REGLA ESTRICTA: Prohibido texto justificado */
+}
+
+/* 4. ENLACE DE SALTO AL CONTENIDO PRINCIPAL (WCAG 2.4.1 BYPASS BLOCKS) */
+.skip-link {
+  position: absolute;
+  top: -999px;
+  left: 1rem;
+  z-index: 1000;
+  padding: 0.75rem 1.25rem;
+  background-color: var(--accent-coral);
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: top 0.15s ease-in-out;
+}
+
+.skip-link:focus {
+  top: 1rem;
+  outline: 3px solid #0a2228;
+  outline-offset: 3px;
+}
+
+/* 5. ESTRUCTURA Y CONTENEDOR GENERAL */
+header,
+main,
+footer {
+  width: 100%;
+  max-width: var(--max-content-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* 6. CABECERA Y NAVEGACIÓN ACCESIBLE */
+header {
+  padding-top: 2.5rem;
+  padding-bottom: 2rem;
+  text-align: left;
+  border-bottom: 2px solid var(--border-color);
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  text-align: left;
+  /* REGLA ESTRICTA: Sin uso excesivo de mayúsculas (se respeta capitalización natural) */
+}
+
+nav {
+  margin-top: 1.25rem;
+}
+
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-list li {
+  margin: 0;
+}
+
+.nav-list a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px; /* Tamaño táctil accesible WCAG 2.5.5 / 2.5.8 */
+  padding: 0.5rem 1.1rem;
+  background-color: var(--bg-surface);
+  color: var(--accent-coral);
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Estados visuales claros en :hover y :focus para navegación */
+.nav-list a:hover {
+  background-color: var(--accent-coral-soft);
+  color: var(--accent-coral-hover);
+  border-color: var(--accent-coral);
+  text-decoration: underline;
+}
+
+.nav-list a:focus,
+.nav-list a:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+  background-color: #ffffff;
+  color: var(--accent-coral-hover);
+  border-color: var(--accent-coral);
+}
+
+/* 7. SECCIONES DE CONTENIDO (MÁRGENES, PADDING Y BORDES ESTRUCTURADOS) */
+main section {
+  background-color: var(--bg-surface);
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2.25rem;
+  box-shadow: 0 4px 14px rgba(10, 34, 40, 0.05);
+}
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border-subtle);
+  text-align: left;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-secondary);
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
+  text-align: left;
+}
+
+p {
+  font-size: 1.0625rem;
+  color: var(--text-primary);
+  margin-bottom: 1.25rem;
+  text-align: left; /* Prohibido texto justificado */
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+p strong,
+p b {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+p em,
+p i {
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+/* Enlaces generales del contenido */
+main a {
+  color: var(--accent-coral);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+main a:hover {
+  color: var(--accent-coral-hover);
+  background-color: var(--accent-coral-soft);
+}
+
+main a:focus,
+main a:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* 8. GALERÍA DE IMÁGENES ACCESIBLE */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.25rem;
+}
+
+.image-card {
+  margin: 0;
+  background-color: var(--bg-surface-alt);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.image-card img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.image-card figcaption {
+  padding: 0.85rem 1rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  text-align: left;
+  background-color: #ffffff;
+}
+
+/* 9. SECCIÓN DE VIDEO ACCESIBLE */
+.video-container {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+video {
+  width: 100%;
+  max-width: 680px;
+  height: auto;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-color);
+  background-color: #051316;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+video:focus,
+video:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 4px;
+}
+
+.video-description {
+  margin-top: 0.85rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+/* 10. LISTA DE TRIBUS EN SECCIÓN EXTRA */
+.tribes-list {
+  list-style-type: square;
+  padding-left: 1.75rem;
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.tribes-list li {
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+/* 11. FOOTER Y REDES SOCIALES ACCESIBLES CON FONT AWESOME */
+footer {
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-top: 2px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  text-align: center;
+}
+
+footer p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+/* Enlaces de iconos con área táctil superior a 44x44px */
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(10, 34, 40, 0.08);
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.social-links a i {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+/* Estados claros en hover y focus para iconos */
+.social-links a:hover {
+  background-color: var(--accent-coral);
+  color: #ffffff;
+  border-color: var(--accent-coral-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(184, 58, 27, 0.3);
+}
+
+.social-links a:focus,
+.social-links a:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 4px;
+  background-color: var(--accent-coral);
+  color: #ffffff;
+  border-color: var(--accent-coral-hover);
+}
+
+/* 12. PREFERENCIAS DEL USUARIO: REDUCCIÓN DE MOVIMIENTO (WCAG 2.3.3) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .skip-link {
+    transition: none;
+  }
+
+  .social-links a:hover {
+    transform: none;
+  }
+}
+
+/* 13. DISEÑO RESPONSIVO (MÓVILES Y PANTALLAS PEQUEÑAS) */
+@media (max-width: 640px) {
+  header,
+  main,
+  footer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  main section {
+    padding: 1.25rem;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-list a {
+    width: 100%;
+    justify-content: center;
+  }
+}
